@@ -1,0 +1,68 @@
+AllCops:
+  NewCops: disable
+  Exclude:
+    - "vendor/**/*"
+    - "db/**/*"
+    - "bin/**/*"
+    - "spec/**/*"
+    - "node_modules/**/*"
+    - "lib/tasks/*"
+    - "app/controllers/concerns/api/*"
+  DisplayCopNames: true
+
+Layout/MultilineBlockLayout:
+  Exclude:
+    - "spec/**/*"
+
+Layout/LineLength:
+  Enabled: false
+
+Metrics/AbcSize:
+  Max: 25
+
+Metrics/BlockLength:
+  Max: 30
+  Exclude:
+    - "Gemfile"
+    - "config/**/*"
+    - "spec/**/*"
+
+Metrics/ClassLength:
+  CountComments: false
+  Max: 300
+
+Metrics/CyclomaticComplexity:
+  Max: 30
+
+Metrics/MethodLength:
+  CountComments: false
+  Max: 30
+
+Naming/AccessorMethodName:
+  Exclude:
+    - "app/controllers/**/*"
+
+Style/AsciiComments:
+  Enabled: false
+
+Style/BlockDelimiters:
+  Exclude:
+    - "spec/**/*"
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/IfUnlessModifier:
+  Enabled: false
+
+Style/WhileUntilModifier:
+  Enabled: false
+
+Bundler/OrderedGems:
+  Enabled: false

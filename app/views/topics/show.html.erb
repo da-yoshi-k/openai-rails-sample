@@ -1,0 +1,23 @@
+<h1 class="text-4xl font-bold mb-6">AIが生成した話題</h1>
+
+<% if @topic.keyword.present? %>
+  <p class="text-gray-500 text-lg mb-6">
+    キーワード：<%= @topic.keyword %>
+  </p>
+<% else %>
+  <p class="text-gray-500 text-lg mb-6">
+    キーワード：なし
+  </p>
+<% end %>
+
+<div class="w-full md:max-w-2xl">
+  <ul class="text-left list-decimal">
+    <% @topic.suggestions.each do |suggestion| %>
+      <div class="mt-4">
+        <li>
+          <%= suggestion.content %>
+        </li>
+      </div>
+    <% end %>
+  <ul>
+</div>

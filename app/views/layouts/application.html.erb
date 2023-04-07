@@ -19,8 +19,15 @@
   </head>
 
   <body>
-    <main class="container mx-auto mt-28 px-5 flex flex-col items-center">
-      <%= yield %>
+    <main>
+      <div class="flex justify-center">
+        <div class="md:max-w-xl">
+          <%= image_tag 'talk-deck.webp' %>
+        </div>
+      </div>
+      <div class="container mx-auto mt-10 px-5 flex flex-col items-center">
+        <%= yield %>
+      </div>
     </main>
   </body>
 </html>

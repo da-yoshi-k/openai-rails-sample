@@ -1,5 +1,5 @@
 FactoryBot.define do
   factory :topic do
-    keyword { "MyString" }
+    keyword { 'MyString' }
   end
 end

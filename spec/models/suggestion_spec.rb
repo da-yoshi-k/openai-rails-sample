@@ -1,5 +1,22 @@
 require 'rails_helper'
 
 RSpec.describe Suggestion, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe 'validation' do
+    context 'content' do
+      it 'is invalid when content is blank' do
+        suggestion = build(:suggestion, content: '')
+        expect(suggestion).to be_invalid
+      end
+
+      it 'is valid when content is 255 characters' do
+        suggestion = build(:suggestion, content: 'a' * 255)
+        expect(suggestion).to be_valid
+      end
+
+      it 'is invalid when content is 256 characters' do
+        suggestion = build(:suggestion, content: 'a' * 256)
+        expect(suggestion).to be_invalid
+      end
+    end
+  end
 end

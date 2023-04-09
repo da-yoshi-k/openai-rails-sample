@@ -11,20 +11,29 @@ class OpenAiApi
       }
     )
     suggestions = response.dig('choices', 0, 'message', 'content').split("\n")
-    clean_suggestions(suggestions)
+    result = clean_suggestions(suggestions)
+    Rails.logger.error("suggestions: #{suggestions}") if result.blank?
+    result
   end
 
   def self.build_prompt_for_suggestion(keyword)
-    prompt_content = 'アイスブレークにピッタリな面白い質問を最大5個まで生成してください。「・」、「- 」、連番は回答内に不要です。日本語で回答してください。質問文を改行区切りで5つ出力してください。生成できない場合はエラーである旨を返してください。'
-    keyword_content = "キーワード「#{keyword}」に関連する、"
-    keyword_description = 'キーワードを含めた適切な質問を最大3つ、他の2つはキーワードを直接含まず違う角度から関連性を考えた質問を生成してください。'
-    prompt_content = keyword_content + prompt_content if keyword.present?
-    prompt_content += keyword_description if keyword.present?
-    prompt_content
+    keyword_content = if keyword.present?
+                        "#{keyword}というキーワードに関連する、"
+                      else
+                        ''
+                      end
+    keyword_description = if keyword.present?
+                            '質問中にキーワードを直接含めた質問は5個中の3つまでとし、残りの2つはキーワードを直接含まず違う角度から関連性を考えた質問にしてください。'
+                          else
+                            ''
+                          end
+    "#{keyword_content}アイスブレークにピッタリな面白い質問を5個日本語で生成してください。#{keyword_description}あなたは参加者の会話を引き出すプロのファシリテーターであるかのように質問を考えてください。次のフォーマットに準拠し、'{質問}'の箇所を生成した質問を置換してください。質問中には「？」を含めてください。フォーマット：'・{質問}\n・{質問}\n・{質問}\n・{質問}\n・{質問}'"
   end
 
   # 配列要素先頭の「・」「- 」「1. 」といった記号を削除
+  # 「?」「？」を含まない要素を削除
   def self.clean_suggestions(suggestions)
     suggestions.map! { |suggestion| suggestion.gsub(/・|- |\d+\. /, '') }
+    suggestions.select { |suggestion| suggestion.include?('?') || suggestion.include?('？') }
   end
 end

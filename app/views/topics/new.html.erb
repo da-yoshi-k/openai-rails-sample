@@ -6,6 +6,12 @@
   ※キーワードが未入力の場合、エラーの可能性が高くなります。
 </p>
 
+<% if flash[:error].present? %>
+  <div class="text-red-500 text-lg mb-6">
+    <%= flash[:error] %>
+  </div>
+<% end %>
+
 <%= form_with model: @topic, method: :post, class: "mb-6" do |form| %>
   <%= form.label :keyword, "キーワード（任意、10文字以内）", class: "block text-lg mb-2" %>
   <%= form.text_field :keyword, class: "border border-gray-400 rounded-md w-full px-3 py-2", maxlength: "10" %>

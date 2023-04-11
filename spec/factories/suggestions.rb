@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :suggestion do
-    content { 'MyString' }
+    sequence(:content) { |n| "suggestion#{n}" }
     association :topic
   end
 end

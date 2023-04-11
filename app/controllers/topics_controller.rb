@@ -1,5 +1,7 @@
 class TopicsController < ApplicationController
-  def index; end
+  def index
+    @topics = Topic.all.order(created_at: :desc)
+  end
 
   def new
     @topic = Topic.new
@@ -12,13 +14,13 @@ class TopicsController < ApplicationController
 
   def create
     @topic = Topic.new(topic_params)
-    return render :new unless @topic.save
-
     @suggestions = OpenAiApi.generate_suggestions(@topic.keyword)
     if @suggestions.blank?
       flash[:error] = 'エラーが発生しました。再度お試しください。'
       redirect_to action: :new
     else
+      return render :new unless @topic.save
+
       @suggestions.each do |suggestion|
         @topic.suggestions.create(content: suggestion)
       end

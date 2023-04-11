@@ -1,10 +1,11 @@
 <h1 class="text-4xl font-bold mb-6">AIトークデッキ</h1>
 
-<p class="text-gray-500 text-md mb-6 text-center">
+<p class="text-gray-500 text-md text-center">
   キーワードを入力すると、AIがキーワードを参考に<br>
-  話題を生成してくれます。<br>
-  ※キーワードが未入力の場合、エラーの可能性が高くなります。
+  話題を生成してくれます。
 </p>
+<%= link_to "今まで生成された話題はこちら", topics_path, class: "mb-6 text-blue-400 hover:text-blue-500" %>
+
 
 <% if flash[:error].present? %>
   <div class="text-red-500 text-lg mb-6">
@@ -12,10 +13,12 @@
   </div>
 <% end %>
 
-<%= form_with model: @topic, method: :post, class: "mb-6" do |form| %>
-  <%= form.label :keyword, "キーワード（任意、10文字以内）", class: "block text-lg mb-2" %>
-  <%= form.text_field :keyword, class: "border border-gray-400 rounded-md w-full px-3 py-2", maxlength: "10" %>
-  <div class="flex justify-center mt-4">
-    <%= form.submit "生成", class: "bg-blue-400 text-white py-2 px-4 rounded-md hover:bg-blue-500 transition-colors duration-200" %>
-  </div>
-<% end %>
+<div class="mt-4">
+  <%= form_with model: @topic, method: :post, class: "mb-6" do |form| %>
+    <%= form.label :keyword, "キーワード（任意、10文字以内）", class: "block text-lg mb-2" %>
+    <%= form.text_field :keyword, class: "border border-gray-400 rounded-md w-full px-3 py-2", maxlength: "10" %>
+    <div class="flex justify-center mt-4">
+      <%= form.submit "生成", class: "bg-blue-400 text-white py-2 px-4 rounded-md hover:bg-blue-500 transition-colors duration-200" %>
+    </div>
+  <% end %>
+</div>

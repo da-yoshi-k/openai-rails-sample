@@ -4,7 +4,7 @@ FactoryBot.define do
   end
 
   factory :topic_with_suggestions, class: Topic do
-    keyword { 'MyString' }
+    sequence(:keyword) { |n| "keyword#{n}" }
     suggestions { build_list(:suggestion, 3) }
   end
 end

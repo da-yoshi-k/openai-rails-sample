@@ -25,4 +25,10 @@
       </div>
     </div>
   <% end %>
+  <%# topicsが奇数個の場合に左寄せにするため要素を追加 %>
+  <% if @topics.size.odd? %>
+    <div class="h-0 w-2/5"></div>
+  <% end %>
 </div>
+
+<%= link_to "トップに戻る", root_path, class: "my-8 text-blue-400 hover:text-blue-500" %>

@@ -34,10 +34,18 @@ RSpec.describe 'Topics', type: :system do
   end
 
   context '画面遷移の検証' do
-    let(:topic) { create(:topic_with_suggestions) }
+    let!(:topic) { create(:topic_with_suggestions) }
 
     it 'トップに戻るボタンを押した時に詳細ページからトップページに遷移すること' do
       visit topic_path(topic)
+      click_link 'トップに戻る'
+      expect(page).to have_content 'AIトークデッキ'
+    end
+
+    it 'トップに戻るボタンを押した時に一覧ページからトップページに遷移すること' do
+      visit root_path
+      click_link '今まで生成された話題はこちら'
+      expect(page).to have_content '今まで生成された話題'
       click_link 'トップに戻る'
       expect(page).to have_content 'AIトークデッキ'
     end

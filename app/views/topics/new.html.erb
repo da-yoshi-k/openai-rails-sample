@@ -1,12 +1,10 @@
 <h1 class="text-4xl font-bold mb-6">AIトークデッキ</h1>
 
-<p class="text-gray-500 text-md mb-6 text-center">
+<p class="text-gray-500 text-md text-center">
   キーワードを入力すると、AIがキーワードを参考に<br>
   話題を生成してくれます。
 </p>
-
-<%# 「今までの履歴」を押すと一覧画面に遷移する %>
-<%= link_to "今まで生成された話題", topics_path, class: "text-blue-400 hover:text-blue-500" %>
+<%= link_to "今まで生成された話題はこちら", topics_path, class: "mb-6 text-blue-400 hover:text-blue-500" %>
 
 
 <% if flash[:error].present? %>

@@ -42,11 +42,11 @@ RSpec.describe 'Topics', type: :system do
       expect(page).to have_content 'AIトークデッキ'
     end
 
-    it 'トップに戻るボタンを押した時に一覧ページからトップページに遷移すること' do
+    fit 'トップに戻るボタンを押した時に一覧ページからトップページに遷移すること' do
       visit root_path
       click_link '今まで生成された話題はこちら'
       expect(page).to have_content '今まで生成された話題'
-      click_link 'トップに戻る'
+      click_link 'トップに戻る', match: :first
       expect(page).to have_content 'AIトークデッキ'
     end
   end

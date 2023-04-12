@@ -50,4 +50,36 @@ RSpec.describe 'Topics', type: :system do
       expect(page).to have_content 'AIトークデッキ'
     end
   end
+
+  context 'ページネーションの検証' do
+    let!(:topics) { create_list(:topic_with_suggestions, 25) }
+
+    it '一覧ページにアクセスした時にページネーションが表示され、3ページまであること' do
+      visit topics_path
+      expect(page).to have_css '.pagination'
+      expect(page).to have_link '2', href: '/topics?page=2'
+      expect(page).to have_link '3', href: '/topics?page=3'
+      expect(page).not_to have_link '4', href: '/topics?page=4'
+    end
+
+    # 作成とは逆順に表示されることに注意
+    it '一覧ページにアクセスした時に1ページ目の話題が表示される' do
+      visit topics_path
+      topics.last(12).each do |topic|
+        expect(page).to have_content topic.keyword
+        expect(page).to have_content topic.suggestions.first.content
+      end
+      expect(page).not_to have_content topics.first.keyword
+      expect(page).not_to have_content topics.first.suggestions.first.content
+    end
+
+    it '2ページ目にアクセスした時に2ページ目の話題が表示される' do
+      visit topics_path
+      click_link '2', match: :first
+      expect(page).not_to have_content topics.last(12).last.keyword
+      expect(page).not_to have_content topics.last(12).last.suggestions.first.content
+      expect(page).not_to have_content topics.first.keyword
+      expect(page).not_to have_content topics.first.suggestions.first.content
+    end
+  end
 end

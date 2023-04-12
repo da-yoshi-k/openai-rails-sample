@@ -1,6 +1,6 @@
 class TopicsController < ApplicationController
   def index
-    @topics = Topic.includes(:suggestions).order(created_at: :desc)
+    @topics = Topic.includes(:suggestions).order(created_at: :desc).page(params[:page])
   end
 
   def new

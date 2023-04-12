@@ -2,6 +2,8 @@
 
 <%= link_to "トップに戻る", root_path, class: "text-blue-400 hover:text-blue-500" %>
 
+<%= paginate @topics %>
+
 <div class="flex flex-row flex-wrap justify-around w-full">
   <% @topics.each do |topic| %>
     <div class="w-4/5 lg:w-2/5 min-h-[300px] rounded-lg overflow-hidden shadow-lg py-4 mb-4">
@@ -30,5 +32,7 @@
     <div class="h-0 w-2/5"></div>
   <% end %>
 </div>
+
+<%= paginate @topics %>
 
 <%= link_to "トップに戻る", root_path, class: "my-8 text-blue-400 hover:text-blue-500" %>

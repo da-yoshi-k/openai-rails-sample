@@ -1,4 +1,5 @@
 document.addEventListener('turbo:load', function () {
+  console.log("test");
   const copyButton = document.getElementById('js-copy-url');
   if (copyButton) {
     copyButton.addEventListener('click', function () {

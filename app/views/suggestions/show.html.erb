@@ -1,7 +1,7 @@
 <div class="bg-slate-100 flex flex-col justify-center items-center min-h-screen">
   <div class="w-[90%] max-w-2xl h-[400px] rounded-lg bg-white shadow-lg fade-down">
     <div class="h-full flex flex-col justify-center items-center text-center m-4">
-      <div class="font-bold text-3xl">今日の話題</d>
+      <div class="font-bold text-3xl">今日の話題</div>
       <div class="my-8">
         <div class="text-2xl">
           <%= @suggestion.content %>
@@ -10,9 +10,9 @@
           <div class="mt-6 text-xl text-gray-500">キーワード：<%= @suggestion.topic.keyword %></div>
         <% end %>
       </div>
-    </div>
-    <div class="self-end mt-6">
-      <div id="js-copy-url" class="text-blue-500 hover:text-blue-400 mr-2 cursor-pointer">🔗 URLをコピー</div>
+      <div class="self-end mt-6">
+        <div id="js-copy-url" class="text-blue-500 hover:text-blue-400 mr-2 cursor-pointer">🔗 URLをコピー</div>
+      </div>
     </div>
   </div>
   <div class="flex flex-row justify-center">

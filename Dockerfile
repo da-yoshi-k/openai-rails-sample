@@ -50,6 +50,10 @@ RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y postgresql-client && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
+# Install ImageMagick
+RUN apt-get update && \
+    apt-get install -y imagemagick
+
 # Run and own the application files as a non-root user for security
 RUN useradd rails --home /rails --shell /bin/bash
 USER rails:rails

@@ -33,6 +33,20 @@ RSpec.describe 'Topics', type: :system do
     end
   end
 
+  context '提案の詳細表示の検証', js: true do
+    let!(:topic) { create(:topic_with_suggestions) }
+
+    it '提案の詳細ページにアクセスした時に提案の内容が表示され、URLをコピーできる' do
+      visit suggestion_path(topic.suggestions.first)
+      expect(page).to have_content topic.suggestions.first.content
+      expect(page).to have_content topic.keyword
+      expect(page).to have_content 'URLをコピー'
+      find('#js-copy-url').click
+      # 'URLをコピーしました'というアラートが表示されることを確認
+      expect(page.driver.browser.switch_to.alert.text).to eq 'URLをコピーしました'
+    end
+  end
+
   context '画面遷移の検証' do
     let!(:topic) { create(:topic_with_suggestions) }
 
@@ -48,6 +62,22 @@ RSpec.describe 'Topics', type: :system do
       expect(page).to have_content '今まで生成された話題'
       click_link 'トップに戻る', match: :first
       expect(page).to have_content 'AIトークデッキ'
+    end
+
+    it '生成後の各話題(Topic)のページでリンクが設定されていること' do
+      visit topic_path(topic)
+      expect(page).to have_link topic.suggestions.first.content, href: suggestion_path(topic.suggestions.first)
+      click_link topic.suggestions.first.content
+      expect(page).to have_content topic.suggestions.first.content
+      expect(page).to have_link '一覧に戻る', href: topics_path
+    end
+
+    it '話題の一覧ページから詳細ページに遷移できること' do
+      visit topics_path
+      click_link topic.suggestions.first.content
+      expect(page).to have_content topic.keyword
+      expect(page).to have_content topic.suggestions.first.content
+      expect(page).to have_link '一覧に戻る', href: topics_path
     end
   end
 

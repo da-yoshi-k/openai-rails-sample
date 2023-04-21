@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe 'Topics', type: :system do
-  # 正常系のテスト
   context '話題生成の検証' do
     it 'キーワードが空欄の時話題の生成が行える' do
       visit new_topic_path
@@ -17,6 +16,13 @@ RSpec.describe 'Topics', type: :system do
       click_button '生成'
       expect(page).to have_content 'AIが生成した話題'
       expect(page).to have_content 'キーワード：テスト'
+    end
+
+    it '不適切なキーワードが入力されている時話題の生成が行えない' do
+      visit new_topic_path
+      fill_in 'topic_keyword', with: '死ぬ'
+      click_button '生成'
+      expect(page).to have_content '不適切なキーワードが含まれていると判定されたため生成が行えませんでした。キーワードを変更して再度お試しください。'
     end
   end
 

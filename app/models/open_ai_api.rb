@@ -2,12 +2,18 @@ class OpenAiApi
   require 'ruby/openai'
 
   def self.generate_suggestions(keyword = '')
+    # キーワードが入力されており、ネガティブなワードが含まれている場合はNGであると判定
+    if keyword.present? && validate_negative_keyword(keyword)
+      Rails.logger.error("inappropriate keyword: #{keyword}")
+      return 'NG'
+    end
+
     client = OpenAI::Client.new(access_token: ENV['OPENAI_API_KEY'])
     prompt_content = build_prompt_for_suggestion(keyword)
     response = client.chat(
       parameters: {
         model: 'gpt-3.5-turbo',
-        messages: [{ role: 'user', content: prompt_content }],
+        messages: [{ role: 'user', content: prompt_content }]
       }
     )
     suggestions = response.dig('choices', 0, 'message', 'content').split("\n")
@@ -35,5 +41,22 @@ class OpenAiApi
   def self.clean_suggestions(suggestions)
     suggestions.map! { |suggestion| suggestion.gsub(/・|- |\d+\. /, '') }
     suggestions.select { |suggestion| suggestion.include?('?') || suggestion.include?('？') }
+  end
+
+  # Natural Language APIを利用して不適切なワードが含まれているか判定
+  NEGATIVE_POINT = 0
+  def self.validate_negative_keyword(keyword)
+    client = Google::Cloud::Language.language_service(version: :v1)
+    document = { content: keyword, type: :PLAIN_TEXT, language: 'ja' }
+    v2_model_options = {
+      v2_model: {
+        content_categories_version: :V2
+      }
+    }
+    response = client.classify_text(document:, classification_model_options: v2_model_options)
+    # 本番環境以外ではresponseをログ出力する
+    Rails.logger.debug("response: #{response}") unless Rails.env.production?
+    # /Adult, /Sensitive Subjects が含まれている場合はネガティブなキーワードと判定
+    response.categories.map(&:name).any? { |category| category.include?('/Adult') || category.include?('/Sensitive Subjects') }
   end
 end

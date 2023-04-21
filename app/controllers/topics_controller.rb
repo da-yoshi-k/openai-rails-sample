@@ -18,6 +18,9 @@ class TopicsController < ApplicationController
     if @suggestions.blank?
       flash[:error] = 'エラーが発生しました。再度お試しください。'
       redirect_to action: :new
+    elsif @suggestions == 'NG'
+      flash[:error] = '不適切なキーワードが含まれていると判定されたため生成が行えませんでした。キーワードを変更して再度お試しください。'
+      redirect_to action: :new
     else
       return render :new unless @topic.save
 

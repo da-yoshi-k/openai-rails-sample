@@ -36,3 +36,4 @@
 .env
 .vscode
 .solargraph.yml
+credentials.json

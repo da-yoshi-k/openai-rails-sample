@@ -7,6 +7,7 @@ primary_region = "nrt"
 processes = []
 
 [env]
+  GOOGLE_APPLICATION_CREDENTIALS_BASE64 = "$GOOGLE_APPLICATION_CREDENTIALS_BASE64"
 
 [experimental]
   auto_rollback = true

@@ -62,6 +62,9 @@ gem 'mini_magick'
 # meta tag
 gem 'meta-tags'
 
+# Google cloud language
+gem 'google-cloud-language'
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem 'debug', platforms: %i[mri mingw x64_mingw]
@@ -95,4 +98,4 @@ group :test do
   gem 'shoulda-matchers', '~> 5.0'
 end
 
-gem "dockerfile-rails", ">= 1.2", :group => :development
+gem 'dockerfile-rails', '>= 1.2', group: :development

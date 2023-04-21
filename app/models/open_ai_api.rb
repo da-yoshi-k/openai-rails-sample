@@ -44,8 +44,12 @@ class OpenAiApi
   end
 
   # Natural Language APIを利用して不適切なワードが含まれているか判定
-  NEGATIVE_POINT = 0
   def self.validate_negative_keyword(keyword)
+    Google::Cloud::Language.configure do |config|
+      encoded_json = ENV['GOOGLE_APPLICATION_CREDENTIALS_BASE64']
+      json = Base64.decode64(encoded_json)
+      config.credentials = JSON.parse(json)
+    end
     client = Google::Cloud::Language.language_service(version: :v1)
     document = { content: keyword, type: :PLAIN_TEXT, language: 'ja' }
     v2_model_options = {

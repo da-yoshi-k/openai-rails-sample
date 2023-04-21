@@ -38,8 +38,6 @@ COPY --link . .
 # Precompile bootsnap code for faster boot times
 RUN bundle exec bootsnap precompile app/ lib/
 
-# Set environment variable
-ENV GOOGLE_APPLICATION_CREDENTIALS_BASE64=$GOOGLE_APPLICATION_CREDENTIALS_BASE64
 
 # Precompiling assets for production without requiring secret RAILS_MASTER_KEY
 RUN SECRET_KEY_BASE=DUMMY ./bin/rails assets:precompile

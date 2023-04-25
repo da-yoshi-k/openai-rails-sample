@@ -2,6 +2,14 @@
 
 <%= link_to "トップに戻る", root_path, class: "text-blue-400 hover:text-blue-500" %>
 
+<div class="w-full">
+  <%= search_form_for @q, url: topics_path, method: :get, class: "my-4" do |f| %>
+    <div class="flex flex-row justify-center items-center">
+      <%= f.search_field :suggestions_content_cont, class: "block w-96 order-2 border-gray-300 rounded-lg p-2 mr-4", placeholder: "話題を検索" %>
+      <%= f.submit "検索", class: "bg-blue-500 hover:bg-blue-600 transition-colors duration-200 text-white ml-2 py-2 px-4 rounded-lg" %>
+    </div>
+  <% end %>
+</div>
 <%= paginate @topics %>
 
 <div class="flex flex-row flex-wrap justify-around w-full">

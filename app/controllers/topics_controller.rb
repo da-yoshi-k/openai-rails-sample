@@ -1,6 +1,7 @@
 class TopicsController < ApplicationController
   def index
-    @topics = Topic.includes(:suggestions).order(created_at: :desc).page(params[:page])
+    @q = Topic.ransack(params[:q])
+    @topics = @q.result(distinct: true).includes(:suggestions).order(created_at: :desc).page(params[:page])
   end
 
   def new

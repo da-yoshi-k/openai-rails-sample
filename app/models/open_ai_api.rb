@@ -18,6 +18,7 @@ class OpenAiApi
     )
     res_suggestions = response.dig('choices', 0, 'message', 'content')
     if res_suggestions.blank?
+      Rails.logger.error("response: #{response}")
       Rails.logger.error("res_suggestions: #{res_suggestions}")
       return ''
     end

@@ -16,7 +16,13 @@ class OpenAiApi
         messages: [{ role: 'user', content: prompt_content }]
       }
     )
-    suggestions = response.dig('choices', 0, 'message', 'content').split("\n")
+    res_suggestions = response.dig('choices', 0, 'message', 'content')
+    if res_suggestions.blank?
+      Rails.logger.error("res_suggestions: #{res_suggestions}")
+      return ''
+    end
+
+    suggestions = res_suggestions.split("\n")
     result = clean_suggestions(suggestions)
     Rails.logger.error("suggestions: #{suggestions}") if result.blank?
     result

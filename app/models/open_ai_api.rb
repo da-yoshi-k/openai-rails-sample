@@ -12,7 +12,7 @@ class OpenAiApi
     prompt_content = build_prompt_for_suggestion(keyword)
     response = client.chat(
       parameters: {
-        model: 'gpt-3.5-turbo',
+        model: 'gpt-3.5-turbo-0613',
         messages: [{ role: 'user', content: prompt_content }]
       }
     )
